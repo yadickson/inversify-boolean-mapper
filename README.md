@@ -1,5 +1,11 @@
 # inversify-boolean-mapper
 
+[![version](https://img.shields.io/github/package-json/v/yadickson/inversify-boolean-mapper?style=flat-square)](https://www.npmjs.com/package/inversify-boolean-mapper)
+![license](https://img.shields.io/github/license/yadickson/inversify-boolean-mapper?style=flat-square)
+[![build](https://img.shields.io/github/actions/workflow/status/yadickson/inversify-boolean-mapper/npm-build.yml?branch=main&style=flat-square)](https://github.com/yadickson/inversify-boolean-mapper/actions/workflows/npm-build.yml)
+![tests](https://img.shields.io/endpoint?style=flat-square&url=https%3A%2F%2Fgist.githubusercontent.com%2Fyadickson%2F2edc636fc2ff6aff4b056d455f3290be%2Fraw%2Finversify-boolean-mapper-junit-tests.json)
+![coverage](https://img.shields.io/endpoint?style=flat-square&url=https%3A%2F%2Fgist.githubusercontent.com%2Fyadickson%2F2edc636fc2ff6aff4b056d455f3290be%2Fraw%2Finversify-boolean-mapper-cobertura-coverage.json)
+
 inversify boolean mapper utility
 
 ## install dependencies
