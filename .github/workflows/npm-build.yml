@@ -10,10 +10,15 @@ on:
 
 jobs:
 
-  version:
+  checkout:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v5
+
+  version:
+    needs: checkout
+    runs-on: ubuntu-latest
+    steps:
     - id: version
       uses: yadickson/actions/version@v1
     - run: echo "project version ${PROJECT_VERSION}"
@@ -24,35 +29,10 @@ jobs:
   build:
     needs: version
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [20, 22, 24]
-
+    container:
+      image: node:22-slim
     steps:
-    - uses: actions/checkout@v5
-
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v5
-      with:
-        node-version: ${{ matrix.node-version }}
-
-    - name: Build
-      run: |
-        npm install
-        npm run build
-
-    - name: Lint
-      run: npm run lint
-
-    - name: Test
-      run: npm t
-
-    - name: Coverage
-      run: npm run test:coverage
-
-    - name: Mutation Test
-      run: npm run test:mutation
+    - uses: yadickson/actions/build@v1
 
   badge:
     needs: build
