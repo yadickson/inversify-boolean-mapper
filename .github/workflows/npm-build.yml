@@ -41,8 +41,20 @@ jobs:
     - name: Mutation Test
       run: npm run test:mutation
 
-  badge:
+  version:
     needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - id: version
+      uses: yadickson/step-version-action@v1
+    - run: echo "project version ${PROJECT_VERSION}"
+      shell: bash
+      env:
+        PROJECT_VERSION: ${{ steps.version.outputs.version }}
+
+  badge:
+    needs: version
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
