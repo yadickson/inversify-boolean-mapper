@@ -8,40 +8,40 @@ on:
     branches:
       - "*"
 
-jobs:
+jobs:    
 
-  checkout:
+  version:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v5
-
-  version:
-    needs: checkout
-    runs-on: ubuntu-latest
-    steps:
     - id: version
       uses: yadickson/actions/version@v1
-    - run: echo "project version ${PROJECT_VERSION}"
-      shell: bash
-      env:
-        PROJECT_VERSION: ${{ steps.version.outputs.version }}
 
-  build:
+  install:
     needs: version
     runs-on: ubuntu-latest
     container:
       image: node:22-slim
     steps:
+    - uses: actions/checkout@v5
+    - uses: yadickson/actions/install@v1
+
+  build:
+    needs: install
+    runs-on: ubuntu-latest
+    container:
+      image: node:22-slim
+    steps:
+    - uses: actions/checkout@v5
     - uses: yadickson/actions/build@v1
 
   badge:
     needs: build
     runs-on: ubuntu-latest
+    container:
+      image: node:22-slim
     steps:
     - uses: actions/checkout@v5
-    - uses: actions/setup-node@v5
-      with:
-        node-version: 20
 
     - name: Coverage
       run: |
