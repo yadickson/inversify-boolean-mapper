@@ -9,7 +9,20 @@ on:
       - "*"
 
 jobs:
+
+  version:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - id: version
+      uses: yadickson/step-version-action@v1
+    - run: echo "project version ${PROJECT_VERSION}"
+      shell: bash
+      env:
+        PROJECT_VERSION: ${{ steps.version.outputs.version }}
+
   build:
+    needs: version
     runs-on: ubuntu-latest
 
     strategy:
@@ -41,20 +54,8 @@ jobs:
     - name: Mutation Test
       run: npm run test:mutation
 
-  version:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-    - id: version
-      uses: yadickson/step-version-action@v1
-    - run: echo "project version ${PROJECT_VERSION}"
-      shell: bash
-      env:
-        PROJECT_VERSION: ${{ steps.version.outputs.version }}
-
   badge:
-    needs: version
+    needs: build
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
