@@ -35,6 +35,15 @@ jobs:
     - uses: actions/checkout@v5
     - uses: yadickson/actions/build@v1
 
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    container:
+      image: node:22-slim
+    steps:
+    - uses: actions/checkout@v5
+    - uses: yadickson/actions/test@v1
+
   badge:
     needs: build
     runs-on: ubuntu-latest
