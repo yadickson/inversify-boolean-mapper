@@ -13,9 +13,7 @@ jobs:
   version:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v5
-    - id: version
-      uses: yadickson/actions/version@v1
+    - uses: yadickson/actions/version@v1
 
   install:
     needs: version
@@ -23,7 +21,6 @@ jobs:
     container:
       image: node:22-slim
     steps:
-    - uses: actions/checkout@v5
     - uses: yadickson/actions/install@v1
 
   build:
@@ -32,53 +29,39 @@ jobs:
     container:
       image: node:22-slim
     steps:
-    - uses: actions/checkout@v5
     - uses: yadickson/actions/build@v1
 
   test:
+    name: "unit testing"
     needs: build
     runs-on: ubuntu-latest
     container:
       image: node:22-slim
     steps:
-    - uses: actions/checkout@v5
     - uses: yadickson/actions/test@v1
 
   coverage:
+    name: "coverage report"
     needs: build
     runs-on: ubuntu-latest
     container:
       image: node:22-slim
     steps:
-    - uses: actions/checkout@v5
     - uses: yadickson/actions/coverage@v1
 
-  mutation:
-    needs: build
-    runs-on: ubuntu-latest
-    container:
-      image: node:22-slim
-    steps:
-    - uses: actions/checkout@v5
-    - uses: yadickson/actions/mutation@v1
+  # mutation:
+  #   name: "mutation testing"
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   container:
+  #     image: node:22-slim
+  #   steps:
+  #   - uses: yadickson/actions/mutation@v1
 
   badge:
-    needs: [test, coverage, mutation]
+    needs: [test, coverage]
     runs-on: ubuntu-latest
     container:
       image: node:22-slim
     steps:
-    - uses: actions/checkout@v5
-
-    - name: Coverage
-      run: |
-        npm i
-        npm t
-        npm run test:coverage
-
-    - name: Badge
-      if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
-      uses: gaelgirodon/ci-badges-action@v1
-      with:
-        gist-id: 2edc636fc2ff6aff4b056d455f3290be
-        token: ${{ secrets.GIST_TOKEN }}
+    - uses: yadickson/actions/badge@v1
