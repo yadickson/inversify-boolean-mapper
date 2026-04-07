@@ -59,9 +59,13 @@ jobs:
   #   - uses: yadickson/actions/mutation@v1
 
   badge:
+    
     needs: [test, coverage]
     runs-on: ubuntu-latest
     container:
       image: node:22-slim
     steps:
     - uses: yadickson/actions/badge@v1
+      with:
+        gist-id: ${{ secrets.GIST_ID }}
+        gist-token: ${{ secrets.GIST_TOKEN }}
