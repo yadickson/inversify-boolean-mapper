@@ -13,3 +13,4 @@ jobs:
   integration:
     uses: yadickson/workflows/.github/workflows/integration.yml@v1
     secrets: inherit
+
