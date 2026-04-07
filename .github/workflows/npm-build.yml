@@ -11,7 +11,7 @@ on:
 jobs:    
 
   integration:
-    uses: yadickson/workflows/.github/workflows/integration.yml@v1
+    uses: yadickson/workflows/.github/workflows/integration.yml@main
     secrets: inherit
     with:
       skip-mutation: true
